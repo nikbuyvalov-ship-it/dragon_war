@@ -6,7 +6,6 @@
     <link rel="icon" href="icon.jpg" type="image/jpeg">
     <title>ГОЛОСУЙТЕ ЗА ВОЙНОВ ДРАКОНА</title>
     <style>
-        /* Базовые стили для фуллскрина */
         body, html {
             margin: 0;
             padding: 0;
@@ -17,7 +16,6 @@
             font-family: sans-serif;
         }
 
-        /* Видео на задний план */
         .video-container {
             position: fixed;
             top: 0;
@@ -33,14 +31,13 @@
             object-fit: cover;
         }
 
-        /* Начальный экран с кнопкой */
         #overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8); /* Затемнение фона */
+            background: rgba(0, 0, 0, 0.9);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -51,59 +48,67 @@
 
         .start-btn {
             padding: 20px 40px;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: bold;
             color: #fff;
-            background: #e63946; /* Красный цвет в стиле драконов */
+            background: #e63946;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 0 20px rgba(230, 57, 70, 0.6);
             text-transform: uppercase;
-            letter-spacing: 2px;
-            -webkit-tap-highlight-color: transparent; /* Убирает синий блик при нажатии на мобилках */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .start-btn:active {
             transform: scale(0.95);
-        }
-
-        .hint {
-            margin-top: 15px;
-            color: #ccc;
-            font-size: 14px;
         }
     </style>
 </head>
 <body>
 
     <div id="overlay">
-        <button class="start-btn" onclick="startExperience()">ВОЙНЫ ДРАКОНА ЛУЧШЕ ВСЕХ</button>
+        <button class="start-btn" id="startBtn">ВОЙНЫ ДРАКОНА ЛУЧШЕ ВСЕХ</button>
     </div>
 
-    <!-- Контейнер с видео -->
     <div class="video-container">
-        <video id="myVideo" loop playsinline>
+        <!-- Добавлены критические атрибуты для iOS: playsinline, webkit-playsinline, preload -->
+        <video id="myVideo" loop playsinline webkit-playsinline preload="auto">
             <source src="Vid.mp4" type="video/mp4">
-            Ваш браузер не поддерживает видео.
         </video>
     </div>
 
     <script>
+        const video = document.getElementById('myVideo');
+        const overlay = document.getElementById('overlay');
+        const btn = document.getElementById('startBtn');
+
+        // Для iOS важно, чтобы запуск видео происходил строго внутри события 'click' или 'touchstart'
+        btn.addEventListener('click', function() {
+            startExperience();
+        });
+
         function startExperience() {
-            const video = document.getElementById('myVideo');
-            const overlay = document.getElementById('overlay');
-
+            // Сначала включаем видео, потом убираем оверлей
             video.muted = false;
-            video.play().catch(function(error) {
-                console.log("Ошибка автоплея: ", error);
-            });
+            
+            // Включаем воспроизведение
+            const promise = video.play();
 
-            // Плавное исчезновение заставки
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 500);
+            if (promise !== undefined) {
+                promise.then(() => {
+                    // Видео пошло — скрываем кнопку
+                    overlay.style.opacity = '0';
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                    }, 500);
+                }).catch(error => {
+                    console.error("Ошибка запуска:", error);
+                    // Если не пускает со звуком, пробуем без (на случай режима энергосбережения)
+                    video.muted = true;
+                    video.play();
+                });
+            }
         }
     </script>
 
