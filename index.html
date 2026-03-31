@@ -2,69 +2,17 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="icon.jpg" type="image/jpg">
-    <title>ГОЛОСУЙТЕ ЗА ВОИНОВ ДРАКОНА</title>
+    <title>Войны Дракона</title>
     <style>
-        /* Основные настройки для мобилок */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background-color: #000; /* Черный фон */
-            font-family: Arial, sans-serif;
-            color: #fff;
-            display: flex;
-            flex-direction: column; /* Элементы идут друг за другом сверху вниз */
-            align-items: center;
-        }
-
-        /* Стиль текста сверху */
-        .header {
-            text-align: center;
-            padding: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 2px 2px 5px rgba(255, 0, 0, 0.5); /* Красная тень для эффекта */
-        }
-
-        .highlight {
-            display: block;
-            font-size: 1.4em;
-            color: #ff0000; /* Выделение красным */
-        }
-
-        /* Контейнер для фото */
-        .image-container {
-            flex-grow: 1; /* Занимает все свободное место */
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        img {
-            width: 100%;
-            max-width: 500px; /* Чтобы на больших экранах не было гигантским */
-            height: auto;
-            object-fit: contain; /* Картинка впишется целиком без обрезки */
-            border-bottom: 3px solid #ff0000; /* Декоративная линия */
-        }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
+        video { width: 100vw; height: 100vh; object-fit: cover; }
     </style>
 </head>
 <body>
-
-    <div class="header">
-        Голосуйте за 2 группу,<br>
-        <span class="highlight">за Воинов Дракона!</span>
-    </div>
-
-    <div class="image-container">
-        <img src="picpic.jpg" alt="Воины Дракона">
-    </div>
+    <video autoplay muted loop playsinline>
+        <source src="vid.mp4" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+    </video>
 
 </body>
 </html>
